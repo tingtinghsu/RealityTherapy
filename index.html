@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>現實治療 25 頁複習站</title>
+<meta name="description" content="選擇理論與現實治療：理論、心智圖、個案概念化、考古題複習的互動式簡報">
+<style>
+:root{
+  --bg:#f6f1e7; --card:#ffffff; --ink:#2b2a27; --muted:#6f6a5f; --line:#e4dccb;
+  --brand:#2f5d50; --brand2:#4d8a78; --soft:#e5efe9; --warm:#b8793a; --warmsoft:#f7ead8;
+  --rose:#a8505a; --rosesoft:#f6e3e5; --blue:#3f6c8f; --bluesoft:#e2edf5;
+  --shadow:0 6px 24px rgba(60,50,30,.08);
+}
+:root[data-theme="dark"]{
+  --bg:#171b19; --card:#222926; --ink:#ece8de; --muted:#a39e91; --line:#38413d;
+  --brand:#7cc2ad; --brand2:#5aa28d; --soft:#23332d; --warm:#e2a366; --warmsoft:#3a2f22;
+  --rose:#e08c96; --rosesoft:#3b2528; --blue:#8fb9da; --bluesoft:#223140;
+  --shadow:0 6px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.7;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+.app{display:flex;flex-direction:column;height:100dvh}
+.top{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--line);background:var(--card)}
+.top h1{font-size:16px;margin:0;color:var(--brand);letter-spacing:.04em;white-space:nowrap}
+.top .sec{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.top .count{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted)}
+.stage{flex:1;position:relative;overflow:hidden;padding:18px 20px}
+.slide{position:absolute;inset:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:28px 36px;overflow-y:auto;opacity:0;pointer-events:none;transform:translateX(24px);transition:opacity .35s,transform .35s}
+.slide.on{opacity:1;pointer-events:auto;transform:none}
+.slide.out{transform:translateX(-24px)}
+.slide h2{font-size:28px;margin:0 0 4px;color:var(--brand);line-height:1.35}
+.slide .kicker{font-size:13px;letter-spacing:.14em;color:var(--warm);font-weight:600;margin-bottom:2px}
+.slide .lead{color:var(--muted);margin:2px 0 18px;font-size:15.5px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr} .slide{padding:20px 18px;inset:10px} .stage{padding:10px} .top h1{font-size:14px}}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.box h3{margin:0 0 6px;font-size:16px;color:var(--brand)}
+.box p,.box ul{margin:4px 0;font-size:14.5px} .box ul{padding-left:20px}
+.box.teal{background:var(--soft);border-color:transparent}
+.box.warm{background:var(--warmsoft);border-color:transparent} .box.warm h3{color:var(--warm)}
+.box.rose{background:var(--rosesoft);border-color:transparent} .box.rose h3{color:var(--rose)}
+.box.blue{background:var(--bluesoft);border-color:transparent} .box.blue h3{color:var(--blue)}
+.tag{display:inline-block;font-size:11.5px;padding:1px 9px;border-radius:99px;margin-right:4px;font-weight:600;vertical-align:middle}
+.t-h{background:var(--warmsoft);color:var(--warm)} .t-c{background:var(--bluesoft);color:var(--blue)} .t-m{background:var(--soft);color:var(--brand)} .t-x{background:var(--rosesoft);color:var(--rose)}
+.exam{font-size:12px;background:var(--rosesoft);color:var(--rose);padding:1px 8px;border-radius:6px;font-weight:600;white-space:nowrap}
+.src{font-size:12px;color:var(--muted);margin-top:14px}
+.quote{border-left:4px solid var(--brand2);padding:6px 14px;margin:10px 0;color:var(--ink);background:var(--soft);border-radius:0 10px 10px 0;font-size:15px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--soft);color:var(--brand)}
+.btn{background:var(--soft);border:1px solid transparent;color:var(--brand);padding:6px 14px;border-radius:99px;font-size:14px;font-weight:600}
+.btn:hover{border-color:var(--brand2)} .btn.on{background:var(--brand);color:#fff}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.panel{display:none} .panel.on{display:block}
+.big{font-size:56px;line-height:1.1;margin:0;color:var(--brand);font-weight:800}
+.cover{display:flex;flex-direction:column;justify-content:center;min-height:100%}
+.cover .sub{font-size:20px;color:var(--muted)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.chip{border:1px solid var(--line);border-radius:99px;padding:3px 14px;font-size:13px;background:var(--bg);color:var(--muted)}
+.bar{display:flex;align-items:center;gap:12px;padding:10px 20px;border-top:1px solid var(--line);background:var(--card)}
+.bar .btn{min-width:44px}
+.prog{flex:1;height:6px;border-radius:9px;background:var(--line);overflow:hidden;position:relative}
+.prog i{position:absolute;inset:0 auto 0 0;width:0;background:var(--brand2)}
+.timer{position:absolute;left:0;right:0;bottom:0;height:3px;background:transparent}
+.timer i{display:block;height:100%;width:0;background:var(--warm)}
+select{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 6px;font:inherit;font-size:13px}
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:20}
+.drawer.on{display:block}
+.drawer .in{position:absolute;right:0;top:0;bottom:0;width:min(420px,92vw);background:var(--card);padding:18px;overflow-y:auto}
+.drawer a{display:flex;gap:10px;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--ink);font-size:14px;cursor:pointer}
+.drawer a:hover,.drawer a.cur{background:var(--soft)}
+.drawer a b{color:var(--brand);min-width:24px}
+.wheel-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:520px}
+.wheel{border-radius:50%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:6px solid var(--line);background:var(--bg);font-weight:700;transition:.2s;padding:6px}
+.wheel small{font-weight:400;color:var(--muted);font-size:12px}
+.wheel.front{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.wheel.sel{transform:scale(1.05);box-shadow:var(--shadow)}
+.car{width:100%;max-width:520px;height:auto}
+.car .body{fill:var(--soft);stroke:var(--brand2);stroke-width:3}
+.car .glass{fill:var(--bluesoft);stroke:var(--brand2);stroke-width:1.5}
+.car .mid{font-size:17px;font-weight:700;fill:var(--brand)}
+.car .midsub{font-size:11px;fill:var(--muted)}
+.car .cap{font-size:12px;fill:var(--muted)}
+.car .sw{cursor:pointer}
+.car .sw rect{fill:#8a867b;stroke:var(--ink);stroke-width:3;transition:.2s}
+.car .sw.front rect{fill:var(--brand);stroke:var(--brand)}
+.car .sw text{font-size:17px;font-weight:700;fill:var(--ink)}
+.car .sw text.s2{font-size:12px;font-weight:400;fill:var(--muted)}
+.car .sw:hover rect,.car .sw.sel rect{stroke:var(--warm);stroke-width:5}
+.flip{perspective:900px;height:210px;cursor:pointer}
+.flip .f{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s}
+.flip.on .f{transform:rotateY(180deg)}
+.flip .s{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px 16px;overflow-y:auto;border:1px solid var(--line)}
+.flip .fr{background:var(--soft);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.flip .fr b{font-size:18px;color:var(--brand)}
+.flip .bk{background:var(--card);transform:rotateY(180deg);font-size:13.5px}
+.flip .bk ul{margin:2px 0;padding-left:18px}
+.acc{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;background:var(--bg)}
+.acc>button{width:100%;text-align:left;background:none;border:0;padding:12px 16px;font-weight:700;color:var(--brand);display:flex;justify-content:space-between;gap:10px}
+.acc .bd{display:none;padding:0 16px 14px;font-size:14.5px}
+.acc.on .bd{display:block} .acc .bd ul{padding-left:20px;margin:4px 0}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;margin:6px 0;font-size:14.5px}
+.opt:hover{border-color:var(--brand2)}
+.opt.ok{background:var(--soft);border-color:var(--brand);color:var(--brand);font-weight:600}
+.opt.no{background:var(--rosesoft);border-color:var(--rose);color:var(--rose)}
+.sami label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin:6px 0;background:var(--bg);cursor:pointer;font-size:14.5px}
+.meter{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0}
+.meter i{display:block;height:100%;background:var(--brand2);width:0;transition:.3s}
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;opacity:.35;transition:.3s;background:var(--bg)}
+.step.on{opacity:1;border-style:solid;border-color:var(--brand2);background:var(--soft)}
+.step b{color:var(--brand)}
+.mm{width:100%;height:min(540px,calc(100dvh - 330px));min-height:300px}
+.mm text{font-size:13px;fill:var(--ink);pointer-events:none}
+.mm .nd rect{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.mm .nd.b rect{fill:var(--soft);stroke:var(--brand2);cursor:pointer}
+.mm .nd.c rect{fill:var(--bg)}
+.mm .nd.root rect{fill:var(--brand);stroke:none}
+.mm .nd.root text{fill:#fff;font-weight:700;font-size:15px}
+.mm .nd.b{cursor:pointer}
+.mm line{stroke:var(--line);stroke-width:1.6}
+.mm .kid{display:none} .mm .kid.on{display:block}
+.keys{font-size:12px;color:var(--muted)}
+kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--bg);font-size:11.5px}
+body.full .top,body.full .keys{display:none}
+.hide-m{display:inline}
+@media(max-width:860px){.hide-m{display:none}.big{font-size:38px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <h1>現實治療 Reality Therapy</h1>
+    <div class="sec" id="sec"></div>
+    <div class="count" id="count"></div>
+  </div>
+  <div class="stage" id="stage"></div>
+  <div class="bar">
+    <button class="btn" id="prev" title="上一頁 (←)">‹</button>
+    <button class="btn" id="play" title="播放 / 暫停 (P)">▶ 播放</button>
+    <button class="btn" id="next" title="下一頁 (→)">›</button>
+    <div class="prog" id="prog"><i></i></div>
+    <select id="spd" title="自動播放每頁停留秒數"><option value="15">15 秒</option><option value="25" selected>25 秒</option><option value="40">40 秒</option></select>
+    <button class="btn" id="ov" title="目錄 (G)">目錄</button>
+    <button class="btn" id="fs" title="全螢幕 (F)">⛶</button>
+    <button class="btn" id="dk" title="深色 (D)">◐</button>
+    <span class="keys hide-m"><kbd>←</kbd><kbd>→</kbd> 翻頁 <kbd>P</kbd> 播放 <kbd>G</kbd> 目錄</span>
+  </div>
+</div>
+<div class="drawer" id="drawer"><div class="in" id="dlist"></div></div>
+
+<script>
+const H = '<span class="tag t-h">講義</span>', C = '<span class="tag t-c">Corey</span>', M = '<span class="tag t-m">我的整理</span>';
+const X = t => `<span class="exam">${t}</span>`;
+const li = a => '<ul>' + a.map(x => `<li>${x}</li>`).join('') + '</ul>';
+
+/* ---------- 共用互動元件 ---------- */
+function tabs(id, items){
+  return `<div data-tabs="${id}"><div class="tabs">${items.map((t,i)=>`<button class="btn ${i?'':'on'}" data-tab="${i}">${t.k}</button>`).join('')}</div>${items.map((t,i)=>`<div class="panel ${i?'':'on'}" data-panel="${i}">${t.v}</div>`).join('')}</div>`;
+}
+function acc(items){
+  return items.map(t=>`<div class="acc"><button>${t.k}<span>＋</span></button><div class="bd">${t.v}</div></div>`).join('');
+}
+
+/* ---------- 25 張投影片 ---------- */
+const S = [];
+const add = (sec, title, html) => S.push({sec, title, html});
+
+// 1 封面
+add('封面','封面',`
+<div class="cover">
+  <div class="kicker">COUNSELING THEORY ・ 輔導原理</div>
+  <h2 class="big">現實治療<br>與選擇理論</h2>
+  <p class="sub">Reality Therapy / Choice Theory</p>
+  <p class="lead" style="max-width:640px">WDEP四個字母：把一條因果鏈變成一場對話：<b>需求沒被滿足，於是選擇了某種整體行為；行動與思考是我能直接改的部分，感受與生理會跟著變。</b></p>
+  <div class="chips"><span class="chip">25 頁互動簡報</span><span class="chip">理論與框架</span><span class="chip">互動心智圖</span><span class="chip">Stan・Gwen 個案</span><span class="chip">考古題複習</span></div>
+  <p class="src">按下方「▶ 播放」自動翻頁，或用 ← → 鍵手動翻頁。</p>
+</div>`);
+
+// 2 導覽
+add('A 定位與脈絡','導覽與資料來源',`
+<div class="kicker">A ・ 定位與脈絡</div><h2>怎麼用這個站</h2>
+<p class="lead">資料來自兩本書。兩者說法不同處。</p>
+<div class="grid g2">
+  <div class="box warm"><h3>${H}教育家文教機構 樊蓉老師編授</h3><p>輔導原理 第十三章「現實治療」，頁 243-257。含歷屆名詞解釋、申論與選擇題。<b>考古題以此為主。</b></p></div>
+  <div class="box blue"><h3>${C}《諮商與心理治療》第 11 章</h3><p>抉擇理論／現實治療，頁 372-406。含 Wubbolding 的 WDEP 實務、Stan 與 Gwen 個案、多元文化與限制。</p></div>
+</div>
+<h3 style="color:var(--brand);margin:20px 0 8px">版面導覽</h3>
+<div class="grid g4">
+  <div class="box"><h3>A 定位</h3><p>第 1-3 頁。Glasser 與三階段理論。</p></div>
+  <div class="box"><h3>B 理論核心</h3><p>第 4-10 頁。需求、行為、3R、立場、因果鏈。</p></div>
+  <div class="box"><h3>C 心智圖</h3><p>第 11-12 頁。互動圖與學派比較。</p></div>
+  <div class="box"><h3>D 框架</h3><p>第 13-17 頁。關係、WDEP、SAMIC³、技術。</p></div>
+  <div class="box"><h3>E 個案</h3><p>第 18-21 頁。Stan、Gwen、亞大案例題。</p></div>
+  <div class="box"><h3>F 考古題</h3><p>第 22-25 頁。名詞卡、申論、測驗、易錯點。</p></div>
+  <div class="box teal" style="grid-column:span 2"><h3>標籤說明</h3><p>${H}出自講義　${C}出自 Corey　${M}我的觀點或例答，非書中原文。</p></div>
+</div>`);
+
+// 3 Glasser 與三階段
+add('A 定位與脈絡','Glasser 與三階段理論',`
+<div class="kicker">A ・ 定位與脈絡</div><h2>從精神醫學到選擇理論</h2>
+<p class="lead">William Glasser（1925-2013），美國精神科醫師。他反對自己受訓的醫療模式。</p>
+<div class="grid g3">
+  <div class="box"><h3>1970年 現實理論</h3><p>強調為自己的行為負責，治療法稱為 WDEP。</p></div>
+  <div class="box"><h3>1980年 控制理論</h3><p>人為了控制外在世界來滿足內在需求，而控制自己的行為系統。</p></div>
+  <div class="box"><h3>1990年 選擇理論</h3><p>行為是選擇，我們唯一能控制的是自己。「We are our choice」。</p></div>
+</div>
+<div class="grid g2" style="margin-top:14px">
+  <div class="box teal"><h3>生平里程碑 ${H}</h3>${li(['1925 生於美國 Ohio 克里夫蘭市','1953 創設現實治療機構（Institute of Reality Therapy）','1965《現實治療：精神醫學的新取向》','《認同社會》（控制理論相關）、《沒有失敗的學校》（校園應用，1990 Quality School）'])}</div>
+  <div class="box blue"><h3>兩者關係 ${C}</h3><p><b>選擇理論是理論基礎，現實治療是實務工具。</b>Wubbolding 的比喻：選擇理論是高速公路，現實治療是在路上運送物品的車輛。</p><p>後續由 Robert Wubbolding 以 WDEP 系統大幅推廣。</p></div>
+</div>
+<p class="src">${X('考點')} 「由控制理論轉變為選擇理論」為正確敘述（交大103）；發展順序是 現實理論 → 控制理論 → 選擇理論。</p>`);
+
+// 4 需求兩說並陳
+add('B 理論核心','人性觀：需求兩說並陳',`
+<div class="kicker">B ・ 理論核心</div><h2>人性觀：我們被需求驅動</h2>
+<p class="lead">講義與 Corey 的「基本需求」</p>
+${tabs('need',[
+{k:'講義說法',v:`<div class="grid g2"><div class="box warm"><h3>${H}p.243 兩類最基本需求</h3>${li(['愛人與被愛的需求','自我價值與被接納的需求'])}</div>
+<div class="box warm"><h3>${H}p.244 控制理論下的 5 項</h3>${li(['四大心理需求：<b>隸屬、權力、自由、玩樂</b>','加上生理需求：<b>生存</b>（生理性、食物）','與 Maslow 對照：Glasser 說「我只有愛，沒有錢」'])}</div></div>
+<div class="quote">手寫筆記：需求未被滿足時人感到痛苦；用負責任的方式滿足，才能建立成功認同。</div>`},
+{k:'Corey 說法',v:`<div class="grid g2"><div class="box blue"><h3>${C}p.375 五個編入遺傳的需求碼</h3>${li(['<b>生存</b>（自我保存）','<b>愛與隸屬</b>','<b>權力</b>（內在控制）','<b>自由獨立</b>','<b>快樂安寧</b>'])}<p>每人五種都有，程度不同。</p></div>
+<div class="box blue"><h3>${C}關鍵補充</h3>${li(['愛與隸屬最基本，也最難被滿足','Wubbolding 另提<b>第六需求：意義與目的</b>（Frankl）','需求是遺傳的，驅動我們所有的生活'])}</div></div>`},
+{k:'並陳對照',v:`<table><tr><th>面向</th><th>講義</th><th>Corey</th></tr>
+<tr><td>數量</td><td>心理 4 + 生理 1 = 5 項</td><td>5 項（另有第六需求）</td></tr>
+<tr><td>用詞</td><td>隸屬、權力、自由、玩樂、生存</td><td>愛與隸屬、權力、自由獨立、快樂安寧、生存</td></tr>
+<tr><td>共通</td><td colspan="2">五項核心一致。差別只在名稱與第六需求。</td></tr></table>
+<div class="box rose" style="margin-top:12px"><h3>${X('陷阱')} 權利 ≠ 權力</h3><p>中教106：「下列何者並非 Glasser 所提出的需求」，答案是選項中的「<b>權利</b>」。Glasser 的是「權<b>力</b>」(power)。</p></div>
+${M} 答題策略：寫論述題時，先寫「五大需求」，再括號補充別種說法，兩套都不會被扣分。`}])}`);
+
+// 5 優質世界
+add('B 理論核心','優質世界與相簿',`
+<div class="kicker">B ・ 理論核心</div><h2>優質世界：每個人心中的香格里拉</h2>
+<p class="lead">我們不能直接滿足需求，只能依「優質世界」裡的圖像去挑選行為。${X('嘉大 5%')}</p>
+<div class="grid g3">
+  <div class="box teal"><h3>來源</h3><p>${H}優質世界（quality world）是現實學派提出的觀點。</p></div>
+  <div class="box teal"><h3>內涵</h3><p>${H}儲存「我個人獨特的需求、憧憬與期盼」，還有我們認可的<b>重要他人</b>。</p></div>
+  <div class="box teal"><h3>應用</h3><p>${H}需求或獨特世界無法讓當事人滿意時就出現問題；治療師教導當事人在 <b>3R</b> 前提下滿足需求。</p></div>
+</div>
+<div class="grid g2" style="margin-top:14px">
+  <div class="box blue"><h3>${C}內在相簿（picture album）</h3>${li(['裡面存放各種憧憬、期盼，與最能滿足它們的最佳方式','相片有些模糊，<b>治療者的角色是幫忙釐清影像</b>','所有相片依個人優先順序排列，有時當事人不清楚自己的順序'])}</div>
+  <div class="box blue"><h3>${C}為什麼關係最重要</h3>${li(['獨特世界裡最重要的成分，是我們渴望與之連結的人','來求助的人，世界裡常常「沒有一個人讓他滿意」','治療成功的前提：<b>治療者要成為當事人願意讓他進入優質世界的人</b>'])}</div>
+</div>
+ 暨大107：說明「選擇理論」與「優質世界」關聯。（作答骨架見第 23 頁）</p>`);
+
+// 6 整體行為
+add('B 理論核心','整體行為：汽車四輪',`
+<div class="kicker">B ・ 理論核心</div><h2>整體行為（Total Behavior）</h2>
+<p class="lead">點一下輪子。四個要素不可分割，但<b>能直接駕駛的只有前輪</b>。${X('彰師大 5%')} ${X('屏大113')}</p>
+<div class="grid g2" style="align-items:center">
+  <svg class="car" id="wheels" viewBox="0 0 520 350" role="img" aria-label="汽車俯視圖：行動與思考是前輪，感受與生理是後輪">
+    <defs><marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--warm)"/></marker></defs>
+    <line x1="260" y1="62" x2="260" y2="18" stroke="var(--warm)" stroke-width="3" marker-end="url(#arr)"/>
+    <text x="276" y="30" class="cap">行駛方向</text>
+    <rect x="185" y="66" width="150" height="262" rx="52" class="body"/>
+    <path d="M205 118 Q260 98 315 118 L306 152 Q260 142 214 152 Z" class="glass"/>
+    <path d="M214 262 Q260 272 306 262 L312 292 Q260 304 208 292 Z" class="glass"/>
+    <text x="260" y="212" text-anchor="middle" class="mid">整體行為</text>
+    <text x="260" y="232" text-anchor="middle" class="midsub">Total Behavior</text>
+    <g class="sw front" data-w="0"><rect x="148" y="82" width="36" height="74" rx="10"/><text x="138" y="116" text-anchor="end">行動</text><text x="138" y="134" text-anchor="end" class="s2">Doing</text></g>
+    <g class="sw front" data-w="1"><rect x="336" y="82" width="36" height="74" rx="10"/><text x="382" y="116">思考</text><text x="382" y="134" class="s2">Thinking</text></g>
+    <g class="sw" data-w="2"><rect x="148" y="236" width="36" height="74" rx="10"/><text x="138" y="270" text-anchor="end">感受</text><text x="138" y="288" text-anchor="end" class="s2">Feeling</text></g>
+    <g class="sw" data-w="3"><rect x="336" y="236" width="36" height="74" rx="10"/><text x="382" y="270">生理</text><text x="382" y="288" class="s2">Physiology</text></g>
+    <text x="260" y="342" text-anchor="middle" class="cap">前輪（綠）帶方向，後輪（灰）跟著走</text>
+  </svg>
+  <div>
+    <div class="box teal" id="wdesc"><h3>點選輪子看說明</h3><p>如同汽車的四輪引導車子行駛，Glasser 把總合行為分為行動、思考、感受與生理反應；行動與思考是<b>前輪</b>，能引導總合行為的方向。</p></div>
+    <div class="box warm" style="margin-top:10px"><h3>考點</h3>${li(['前輪是行動與思考（不是感受、生理）','Glasser 認為較重要的總合行為是<b>行動</b>（交大103）','Total Behavior 的元素不含 Belief（彰師大，選項「信念」是干擾）','筆記：Doing 會帶領 Feeling。改變行動才改變感覺'])}</div>
+  </div>
+</div>
+<p class="src">${C}p.377：Corey 指出強調思考與行動，也是認知行為治療的共同形式。每個完整行為都是在執行「想要」(want) 去滿足需求 (need)。</p>`);
+
+// 7 動詞化
+add('B 理論核心','動詞化與行為是語言',`
+<div class="kicker">B ・ 理論核心</div><h2>不說「我憂鬱」，說「我正在憂鬱」</h2>
+<p class="lead">選擇理論的責任觀：人是主動選擇，而不是被動承受。</p>
+<div class="grid g2">
+  <div class="box rose"><h3>${C}動詞型態</h3><p>感受憂鬱、頭痛、生氣、焦慮，意味著被動且缺少個人責任，也不精確。較精確的說法是<b>正在憂鬱、正在頭痛、正在憤怒、正在焦慮</b>。</p><p>人們發展一系列「痛苦行為」(paining behaviors)，是因為在當時那是最好的行為表現，常給予他們所要的。</p></div>
+  <div class="box blue"><h3>${C}Wubbolding：行為就是一種語言</h3><p>人們不斷透過行為向外界傳遞訊息。可以問：</p><div class="quote">「你希望別人從你的所作所為中，知道哪些訊息？」</div></div>
+</div>
+<h3 style="color:var(--brand);margin:18px 0 8px">講義：對憂鬱症的看法 ${H} ${X('書：是你選擇了憂鬱')}</h3>
+<div class="grid g4">
+  <div class="box"><h3>① 能控制憂鬱</h3><p>是我選擇的，所以我能掌握。</p></div>
+  <div class="box"><h3>② 控制別人或自己</h3><p>讓別人來關心我。</p></div>
+  <div class="box"><h3>③ 間接傳遞求救訊號</h3><p>「我不想再這樣下去了！」</p></div>
+  <div class="box"><h3>④ 為逃避找藉口</h3><p>例如：父母憂鬱症的孩子。</p></div>
+</div>
+<p class="src">講義的分類提醒：把憂鬱視為「疾病」是<b>錯誤</b>的看法（手寫紅字 X）。${M} 但這不是在責怪受苦的人：Corey 補充，治療者應<b>解釋</b>受苦並非直接選擇，而是完整行為的一部分，雖然無效，卻是他用來滿足需求的最大努力。</p>`);
+
+// 8 3R 與成功認同
+add('B 理論核心','3R 與成功認同',`
+<div class="kicker">B ・ 理論核心</div><h2>3R：正當、責任、現實</h2>
+<p class="lead">人要用「正當」來評估自己行為，在不傷害他人原則下滿足需求（負責），並在「現實」限制下達到成功認同。${X('嘉大 25%')}</p>
+<div class="grid g3">
+  <div class="box teal"><h3>Right 正當</h3><p>了解正當行為的標準為何。評估自己行為是否合宜。</p></div>
+  <div class="box teal"><h3>Responsibility 責任</h3><p>在不傷害他人下滿足自己需求。<b>不干擾他人的自由。</b></p></div>
+  <div class="box teal"><h3>Reality 現實</h3><p>積極面對現實，在現實限制下求成功認同。</p></div>
+</div>
+<div class="box warm" style="margin-top:12px"><h3>講義例子：小明想考研究所 ${H}</h3><p><b>正當</b>：每天安排時間讀書的計畫。<b>責任</b>：計畫必須有效率執行且不傷害他人。<b>現實</b>：計畫必須符合現實，如白天要去打工賺生活費。</p></div>
+<div class="grid g2" style="margin-top:12px">
+  <div class="box"><h3>成功認同 vs 失敗認同 ${X('師大 5%')}</h3>${li(['成功認同：能愛人也能被愛，覺得自己對他人是重要的，能在不傷害他人下滿足需求，有能力創造滿意生活','失敗認同：未能學到負責的行為。講義：可歸咎學校與家庭；Glasser《沒有失敗的學校》指出學校制度使兒童缺乏成功經驗','中教111 提示：失敗認同退化順序是 消極耽溺 → 負向症狀 → 放棄'])}</div>
+  <div class="box"><h3>積極嗜好（positive addiction）</h3>${li(['培養心理力量的嗜好，例如跑步、冥想（「上好習慣的癮」）','與成功認同相連：Glasser 的建議','彰師大選擇題：<b>培養每天可做的嗜好，如跑步和冥想</b>，屬於現實諮商的策略'])}</div>
+</div>`);
+
+// 9 立場
+add('B 理論核心','與傳統治療的分水嶺',`
+<div class="kicker">B ・ 理論核心</div><h2>五個明確立場，也是最愛考的是非題</h2>
+<p class="lead">這一頁的每條都對應過歷屆題。${C}整理為現實治療的重要特徵。</p>
+<table>
+<tr><th style="width:18%">立場</th><th>內容</th><th style="width:22%">對照與考點</th></tr>
+<tr><td><b>強調抉擇與責任</b></td><td>當事人所做的都是自己選擇的。這不表示該被責備或懲罰。焦點已從「負起責任」改為「不同選項與抉擇」。</td><td>責任不是責備</td></tr>
+<tr><td><b>拒絕移情</b></td><td>治療者呈現真實的自己。Glasser：「我就是我自己，我不是你媽、爸爸或任何人。」移情是治療者與當事人同時逃避負起目前狀態責任的方式。</td><td>${X('中教109')} 答案 Glasser。Corey 作者不完全同意</td></tr>
+<tr><td><b>聚焦當下</b></td><td>過去可能影響現在，但過去不等於問題本身。Wubbolding：「歷史不是命定」。可聽英雄事蹟與美好關係，只花合宜時間談過去失敗。</td><td>政大：探索過去時聚焦<b>過去成功</b>（O）</td></tr>
+<tr><td><b>避免聚焦症狀</b></td><td>症狀是身體對無效行為的警訊。只要改善無法滿足需求的關係，症狀立刻會消失。</td><td>${X('高醫107')} 聚焦過去不是特徵</td></tr>
+<tr><td><b>挑戰傳統疾病觀</b></td><td>Glasser 反對標籤診斷、批評依賴 DSM、對用藥保留。講義：心理症狀只是選擇用來控制外在世界的方法，並非病徵。</td><td>Wubbolding 與 DSM 相容，現實治療是「心理健康系統」</td></tr>
+</table>
+<div class="box rose" style="margin-top:12px"><h3>怎麼理解 Glasser 與 Wubbolding 的分歧 </h3><p>Glasser 立場激進，主張除非有腦部損傷（如阿茲海默症、癲癇），否則不該貼精神疾病標籤；Wubbolding 較調和，要求諮商員遵守精神醫學診斷準則與標準處遇。考試時以講義的 Glasser 立場為主</p></div>`);
+
+// 10 因果鏈
+add('B 理論核心','我的觀點：因果鏈',`
+<div class="kicker">B ・ 理論核心</div><h2>從需求缺口到改變</h2>
+<p class="lead">${M} 按「下一步」逐段點亮就能反推 WDEP。不談過去和症狀。</p>
+<div class="steps" id="chain">
+  <div class="step on"><b>① 需求未被滿足</b>：五種需求中（愛與隸屬、權力、自由獨立、快樂安寧、生存）有一個或多個缺口，心情不好就是訊號。（第 4 頁）</div>
+  <div class="step"><b>② 優質世界出現落差</b>：相簿裡想要的圖像，與我們「知覺」到能得到的有距離。行為就是為了填補這個空隙。（第 5 頁）</div>
+  <div class="step"><b>③ 選擇整體行為</b>：每個總合行為都是「當時最好的嘗試」，包含行動、思考、感受、生理。憂鬱也是其一部分。（第 6-7 頁）</div>
+  <div class="step"><b>④ 只有前輪能直接改</b>：行動與思考可直接改，感受與生理無法直接命令。所以不聚焦感受與症狀。（第 6 頁）</div>
+  <div class="step"><b>⑤ 現在才改得動</b>：過去不可改，唯有現在的行動可改，所以拒絕移情、聚焦當下。（第 9 頁）</div>
+  <div class="step"><b>⑥ WDEP 把前五步變成對話</b>：W What, 想要什麼。找出缺口，D Direction, 方向與目前行為，E Evaluation 評估有沒有用，Plan & Promise 訂出可做的計畫、與承諾。（第 14-16 頁）</div>
+  <div class="step"><b>⑦ 結果：成功認同與更好的關係</b>：行動改變，感受跟著變，關係變好，就累積成功認同。（第 8 頁）</div>
+</div>
+<div style="margin-top:14px;display:flex;gap:10px"><button class="btn" id="chainNext">下一步 ›</button><button class="btn" id="chainReset">重設</button></div>`);
+
+// 11 心智圖
+add('C 心智圖','互動心智圖',`
+<div class="kicker">C ・ 心智圖</div><h2>現實治療心智圖</h2>
+<p class="lead">點選綠色主枝展開或收合子節點。（承接講義第一頁的概念圖：人性觀、核心概念、WDEP、技術、環境、應用）</p>
+<svg class="mm" id="mm" viewBox="0 0 960 560" role="img" aria-label="現實治療心智圖"></svg>
+<p class="src"><button class="btn" id="mmAll">全部展開</button> <button class="btn" id="mmNone">全部收合</button></p>`);
+
+// 12 學派比較
+add('C 心智圖','學派比較',`
+<div class="kicker">C ・ 心智圖</div><h2>學派比較</h2>
+<p class="lead">講義的比較提示：與 Freud 不同，與存在、人本、完形同樣強調當事人的主觀世界。</p>
+<table>
+<tr><th>面向</th><th>精神分析</th><th>人本（Rogers）</th><th>阿德勒</th><th>現實治療</th></tr>
+<tr><td>時間焦點</td><td>過去、童年</td><td>此時此刻的經驗</td><td>生活型態、早年回憶</td><td><b>現在</b>的行為</td></tr>
+<tr><td>意識層次</td><td>潛意識</td><td>自我概念</td><td>目的與生活風格</td><td><b>意識</b>（現時）</td></tr>
+<tr><td>移情</td><td>核心工具</td><td>真誠一致，不以移情為核心</td><td>不以移情為主軸</td><td><b>排斥移情</b></td></tr>
+<tr><td>不負責行為</td><td>探索其根源</td><td>無條件接納</td><td>探索其目的，鼓勵社會興趣</td><td><b>不接受藉口</b>，也不懲罰</td></tr>
+<tr><td>情緒</td><td>探索壓抑衝突</td><td>反映與接納感受</td><td>理解感受的目的</td><td>承認感受，但鼓勵改變行動與思考；懷疑宣洩</td></tr>
+<tr><td>主觀世界</td><td>以潛意識為主</td><td>強調</td><td>強調（私人邏輯）</td><td>強調（優質世界與知覺）</td></tr>
+</table>
+<div class="grid g2" style="margin-top:12px">
+  <div class="box warm"><h3>${H}</h3>${li(['與 Freud 不同：移情 vs 現時，潛意識 vs 意識','與存在、人本、完形同樣強調當事人之「主觀世界」','與 REBT：建設性辯論（拓展自我觀念）可對照 REBT','暨大考古題：Rogers 所強調的「接納」並不等於寬恕不負責行為'])}</div>
+  <div class="box teal"><h3>${M}阿德勒 vs 現實治療（中教109 申論用）</h3>${li(['<b>相同</b>：行為有目的；重視人際與歸屬（社會興趣 / 愛與隸屬）；責任導向、短期、教育性','<b>相異</b>：阿德勒重視早年生活型態與家庭星座，現實治療不談過去；阿德勒談自卑與補償，現實治療談需求缺口與選擇'])}<p style="font-size:12px;color:var(--muted)"></p></div>
+</div>`);
+
+// 13 治療關係
+add('D 治療框架','治療關係與環境',`
+<div class="kicker">D ・ 治療框架</div><h2>關係先於技術：8 項歷程原則</h2>
+<p class="lead">「若缺乏良好治療關係，便無法完成 WDEP」。${C}</p>
+<div class="grid g2">
+  <div class="box warm"><h3>${H}治療歷程 8 原則</h3><ol style="font-size:14.5px;padding-left:20px;margin:4px 0"><li><b>投入</b> (involvement)</li><li>著重「目前的行為」</li><li>強調現時</li><li>評價自己的行為：「你這樣做有用嗎？」</li><li>計畫</li><li>承諾：「你真的要去做嗎？」</li><li>不接受藉口（面質）：「那你什麼時候要去做？」</li><li>排除懲罰</li></ol></div>
+  <div><div class="box blue"><h3>${C}治療者的人格特質</h3><p>溫暖、真誠、統整一致、了解、接納、關心、尊重、開放，並願意接受他人挑戰。要「溫和，但堅定地挑戰」。</p></div>
+  <div class="box rose" style="margin-top:12px"><h3>${C}建立聯盟時要避免</h3><p>爭辯、攻擊、貶損、責罵、批評、挑毛病、鼓勵找藉口、懷恨、讓當事人害怕、輕率放棄當事人。</p></div></div>
+</div>
+<div class="grid g2" style="margin-top:12px">
+  <div class="box teal"><h3>${H}治療者功能與角色</h3>${li(['本身必須是負責且能自我實現的人','不替當事人做價值判斷與決定','具有<b>教師</b>的功能','應提出「設限」'])}</div>
+  <div class="box teal"><h3>${H}三原則（嘉大考古題） ${X('25%')}</h3>${li(['<b>不接受藉口</b>：不問「為什麼沒做到」，改問「那你什麼時候要去做？怎麼做？」','<b>不要懲罰</b>：懲罰破壞關係，且帶來失敗認同；只有讚美使人負責','<b>永不放棄</b>：給時間轉變，一再討論計畫直到進步'])}</div>
+</div>`);
+
+// 14 WDEP
+add('D 治療框架','WDEP 系統',`
+<div class="kicker">D ・ 治療框架</div><h2>WDEP：把原理變成會談的節奏</h2>
+<p class="lead">${X('屏大103/106・東吳110・政大111')} 歷屆最熱門。點選字母看各步驟的問句與範例。</p>
+${tabs('wdep',[
+{k:'W 想要',v:`<div class="grid g2"><div class="box teal"><h3>Wants, needs, perceptions</h3><p>${H}確定當事人的需求。W = 期盼、需求與知覺。關鍵問句：<b>「你要什麼？」</b></p><p>${C}探索「相簿」，包括想從家人、朋友、工作與自己、也想從諮商中得到什麼。</p></div>
+<div class="box"><h3>範例問句</h3>${li(['「如果現在的自己可以過理想的生活，那會是什麼樣子？」（政大111）','「假如你就是自己理想中的那個人，那會是怎樣的人？」','「那些你想要但在生活中沒有得到的是什麼？」','「你是如何看待此一情境的？」（知覺）'])}</div></div>`},
+{k:'D 方向與行動',v:`<div class="grid g2"><div class="box teal"><h3>Direction and doing</h3><p>${H}認清行為帶領的方向，探索完整行為的四面向。「改變行動與想法比改變感覺容易」。</p><p>${C}以目前為焦點：<b>「你正在做什麼？」</b>像拿一面鏡子問：「你現在看到的自己是……？」</p></div>
+<div class="box"><h3>範例問句</h3>${li(['「當你隔離在家，你覺得如何？」','「當你隔離在家、感到焦慮時，你的身體有什麼地方跟著改變了？」（政大111）','「昨天確實做了什麼？」「上個禮拜有做些什麼不一樣的呢？」'])}</div></div>`},
+{k:'E 評估',v:`<div class="grid g2"><div class="box teal"><h3>Evaluation（self-evaluation）</h3><p>${H}自我評估及價值判斷。${C}<b>現實治療的基石</b>，也是行為改變的正途；「個人不會改變，除非先確定改變會有更多益處」。</p></div>
+<div class="box"><h3>範例問句</h3>${li(['「你正在做的對你是有幫助或是傷害呢？」','「你目前所做的是否是你真正想要做的？」','「這是否有助於你以這樣的方式來看待？」','「現在每天在家、遠離人群，是否能有正常社交生活？」（政大111）'])}</div></div>
+<div class="box rose" style="margin-top:10px"><h3>${X('陷阱')}</h3><p>E 是<b>自我評鑑</b>，不是「效果與效能」（彰師106）。評鑑每個完整行為的四個成分，都在當事人責任範圍內。</p></div>`},
+{k:'P 計畫',v:`<div class="grid g2"><div class="box teal"><h3>Planning and action</h3><p>${H}擬訂並承諾導致改變的計畫。良好的計畫特徵為 <b>SAMIC³</b>（下一頁）。</p><p>${C}最重要的問題：<b>「你的計畫是什麼？」</b>計畫不可行就一起設計另一個，不批判。</p></div>
+<div class="box"><h3>範例問句</h3>${li(['「你打算什麼時候開始執行？每次大概會通話幾分鐘？」（政大111）','「今天你願意開始為改變生活做些什麼？」','「如果你的外在環境都沒有改變，你會做些什麼不一樣的事情？」'])}</div></div>
+<div class="quote">Wubbolding 的格言：「若無法做出計畫，就是計畫好了要讓自己失敗！」${C}</div>`}])}
+<p class="src">${C}提醒：原則一致，運用依諮商員風格、當事人而定，且過度詢問會引發抗拒。</p>`);
+
+// 15 E 自我評鑑
+add('D 治療框架','E：自我評鑑問句',`
+<div class="kicker">D ・ 治療框架</div><h2>E 是整套歷程的樞紐</h2>
+<p class="lead">諮商員的工作不是「評價」當事人，而是<b>挑戰當事人檢驗自己的所作所為</b>。${C}</p>
+<div class="grid g2">
+  <div class="box blue"><h3>${C}Wubbolding 的評鑑問句清單</h3>${li(['你正在做的，對你是有幫助或是傷害呢？','你目前所做的是否是你真正想要做的？','你的行為是否有好處？','你所做的和你所相信的之間，是否具有建設性的一致？','你正在做的是否違反這些規則？','你所想要的是否實際上可以得到？','你對目前的處境完全無法掌控，這是真的嗎？','你願意承諾盡全力參與治療並改變自己的生活嗎？'])}</div>
+  <div class="box warm"><h3>小測驗：哪一句不是 E？${X('高師112')}</h3>
+    <button class="opt" data-eq="0">(A)「你現在做的事情對你有幫助嗎？」</button>
+    <button class="opt" data-eq="1">(B)「當你在做這件事的時候，你想到甚麼？」</button>
+    <button class="opt" data-eq="2">(C)「這件事可以讓你將來的生活更好嗎？」</button>
+    <button class="opt" data-eq="3">(D)「這個選擇的好處是甚麼？需要放棄甚麼？」</button>
+    <p id="eqfb" class="src"></p></div>
+</div>
+<div class="box teal" style="margin-top:12px"><h3>${M}為什麼要放在最前面問</h3><p>現實治療者不聚焦在冗長的抱怨與批評，因為在整套行為庫中那是最無效的行為。<b>先承認感受，再把話題拉回「這樣做有用嗎」。</b>當事人如果把痛苦全歸因外界，E 就是把控制權交還給他的第一步。</p></div>`);
+
+// 16 SAMIC3
+add('D 治療框架','P：SAMIC³ 計畫檢核',`
+<div class="kicker">D ・ 治療框架</div><h2>好計畫的七個特徵：SAMIC³</h2>
+<p class="lead">勾勾看：下面這個計畫符合幾項？也可以換成自己的例子。${H}${C}</p>
+<div class="grid g2">
+  <div>
+    <div class="box" style="margin-bottom:8px"><b>範例計畫（${M}）：</b>「我要多出門、多認識人。」</div>
+    <div class="sami" id="sami">
+      <label><input type="checkbox"><span><b>S</b> 簡單 Simple：簡單、明瞭、特定、具體、可測量</span></label>
+      <label><input type="checkbox"><span><b>A</b> 可獲得 Attainable：依個案意願、可達成</span></label>
+      <label><input type="checkbox"><span><b>M</b> 可測量 Measurable：例如每天兩小時</span></label>
+      <label><input type="checkbox"><span><b>I</b> 立即、投入 Immediate / Involved：可立即執行（Corey 為合作參與）</span></label>
+      <label><input type="checkbox"><span><b>C</b> 可由計畫者控制 Controlled by planner：自己能做，不靠別人</span></label>
+      <label><input type="checkbox"><span><b>C</b> 承諾 Committed：以書面表示</span></label>
+      <label><input type="checkbox"><span><b>C</b> 持續去做 Continuously / Consistently done：可重複每日實踐</span></label>
+    </div>
+    <div class="meter"><i id="samiBar"></i></div><p id="samiTxt" class="src"></p>
+  </div>
+  <div>
+    <div class="box warm"><h3>改寫示範 ${M}</h3><p><b>原：</b>「我要多出門、多認識人。」<br><b>改：</b>「這週三、五晚上七點，我走路到社區中心參加讀書會，並傳訊息給課助教說我到了。我把計畫寫在冰箱上。」</p><p style="font-size:13px;color:var(--muted)">改寫後：特定、可測量、立即、自己控制、書面承諾、每週重複。</p></div>
+    <div class="box teal" style="margin-top:10px"><h3>${C}計畫的其他要點</h3>${li(['計畫要在當事人動機與能力範圍內','包含積極正向的行動，而非「不要做什麼」','要由當事人自己發展；依靠他人制定的計畫會讓人感到不是自己掌舵','承諾不是全有或全無，是程度多寡','計畫不順時，治療者堅持不放棄，一起修正'])}</div>
+  </div>
+</div>`);
+
+// 17 技術箱
+add('D 治療框架','技術箱',`
+<div class="kicker">D ・ 治療框架</div><h2>現實治療的技術工具箱</h2>
+<p class="lead">${H}p.246-247。手寫提示：可與阿德勒（敢於拒絕？）、Frankl 減反省法、REBT 對照。</p>
+<div class="grid g3">
+  <div class="box"><h3>角色扮演</h3><p>練習新行為，預演現實中的對話。</p></div>
+  <div class="box rose"><h3>語言震驚法（矛盾法）${X('師大・屏大 5%')}</h3><p>使當事人受到震懾或以適當譏諷面對不合現實的行為，使其能負起責任。例：「這真是個最笨的行為！我可以看見它將帶來……的後果。」</p></div>
+  <div class="box"><h3>面質（對立技術）</h3><p>不允許任何藉口。對應歷程原則「不接受藉口」。</p></div>
+  <div class="box teal"><h3>積極性技術</h3><p>以積極擬訂計畫取代探索當事人的挫折與失敗。</p></div>
+  <div class="box"><h3>跟進（Pinning down）</h3><p>緊盯計畫目標的細節：諮商師問得愈清楚，達成可能性愈大。</p></div>
+  <div class="box"><h3>控制知覺</h3><p>用控制理論改變行為；以「冥想」改變知覺以降低需求與知覺的不一致。積極成癮策略：冥想、跑步、超覺冥想、生理回饋、視覺想像、吟唱、徒步旅行。</p></div>
+  <div class="box blue" style="grid-column:span 3"><h3>建設性辯論（Constructive Debate）</h3><p>為了拓展當事人自我觀念，期望在爭辯中使當事人發現事物的價值與意義。（手寫提示：可對照 REBT 的駁斥，兩者形式相近，但現實治療重點仍在「這樣有用嗎」。）</p></div>
+</div>
+<div class="box warm" style="margin-top:12px"><h3>${M}矛盾策略的使用提醒</h3><p>語言震驚用在「已建立關係」且「當事人能懂幽默」的時機；關係沒建好就用，容易變成批評，違反治療者避免行為。Corey 也提醒要避免貶損、責罵與挑毛病。</p></div>`);
+
+// 18 Stan 概念化
+add('E 個案概念化','Stan 個案：概念化',`
+<div class="kicker">E ・ 個案概念化</div><h2>Stan：一直當受害者的人</h2>
+<p class="lead">${C}p.398-400。Stan 一直無法有效得到需求中最關鍵的一項：<b>一個滿意的關係</b>。</p>
+<div class="grid g2">
+  <div class="box rose"><h3>表面問題</h3><p>憂鬱、焦慮、失眠與其他身心症狀。Stan 一直<b>以受害者的角色在過生活，責備別人，以往後看代替向前走。</b></p></div>
+  <div class="box teal"><h3>現實治療的定位</h3><p>用選擇理論確認行為動機，提供工作方向，教導他如何以<b>更好的選擇</b>得到他所要的。</p></div>
+</div>
+<h3 style="color:var(--brand);margin:16px 0 8px">用整體行為拆解 ${M}</h3>
+<div class="grid g4">
+  <div class="box"><h3>行動</h3><p>責備別人、抱怨、停留在過去（書中：花很多時間埋怨）。</p></div>
+  <div class="box"><h3>思考</h3><p>「問題都是別人造成的」「我是受害者」。</p></div>
+  <div class="box"><h3>感受</h3><p>憂鬱、焦慮、恐慌發作。</p></div>
+  <div class="box"><h3>生理</h3><p>失眠、其他身心症狀。</p></div>
+</div>
+<div class="box warm" style="margin-top:12px"><h3>需求缺口 ${M}</h3><p>最缺的是<b>愛與隸屬</b>（沒有滿意的關係）；受害者角色同時是一種低成本的<b>權力</b>嘗試（用責備獲得掌控感），但沒有帶來所要的。書中治療者列出的需求包含歸屬、成就、權力、自由與快樂。</p></div>
+<p class="src">${M} Stan 的「憂鬱」是整個行為庫中他認為最有效的那一招。要改變的不是憂鬱，而是讓這一招不再是他唯一的選項。</p>`);
+
+// 19 Stan WDEP
+add('E 個案概念化','Stan 個案：治療歷程',`
+<div class="kicker">E ・ 個案概念化</div><h2>Stan：現實治療者怎麼做</h2>
+<p class="lead">${C}p.399-400。把書中的做法對應回 WDEP。</p>
+${tabs('stan',[
+{k:'關係先行',v:`<div class="quote">與 Stan 建立關係之後，我讓他看到<b>除非他選擇當過去的受害者，否則他不會是受害者</b>。</div><p>${C}治療者確定他已充分重溫過去痛苦，進行下去。無法改變童年，但他對過去經驗與現在處境的影響作用，已能用不同的視框了解。最後，他理解到<b>無法控制別人，卻可以控制他目前要做的</b>。</p>`},
+{k:'W 想要',v:`<div class="quote">我要求 Stan 描述：假如他的症狀都消失了，那麼生活會有什麼不同？</div><p>${C}他想成為諮商員的樣子、與人見面時表現出信心、將自己視為一個有價值的人，以及享受生活。（這些就是他優質世界裡的圖像）</p>`},
+{k:'D 行動',v:`<p>${C}向他解說完整行為由行動、思考、感受及生理組成。Stan 雖然很討厭大部分時間感受到焦慮，仍學到：<b>很多他正在做和正在想的，正是直接造成他不想要的感受和生理反應的原因</b>。</p><div class="quote">我更有興趣的是他「正在做的」和「正在想的」是什麼，因為這些是可以直接改變的行為成分。</div><p>治療者幫 Stan 了解<b>憂鬱是他選擇的一部分</b>。</p>`},
+{k:'E 評估',v:`<div class="quote">「現在選擇去做的，是不是可以讓你得到所要的？」</div><p>${C}當 Stan 退步時，治療者看見他做出<b>與之前不一樣的行動</b>時就是最好的行動，並幫他了解，他有力量去改變。評估許多他正在做的事沒有辦法實現這些圖像。</p>`},
+{k:'P 計畫',v:`<p>${C}他決定願意對自己做一些不同的工作時，諮商中大部分的時間用來<b>計畫及討論計畫的實踐</b>。焦點放在他現在可以做的事，以達到所要的改變步驟。</p><ul><li>Stan 持續實踐計畫，逐漸有成功的經驗</li><li>沒有顯著進步時，一起好好修正原計畫，並讓他知道<b>治療者不會放棄他</b></li><li>鼓勵閱讀刺激思考的書，把所學帶入諮商</li><li>教導選擇理論及 WDEP 系統，最後 Stan 逐漸接受「他是唯一可以控制自己行為的人」</li></ul>`}])}
+<p class="src">${M} 注意：這個個案示範了 W 與 D 的順序可以來回，並非直線。手寫提醒的陷阱：不要把「他很憂鬱」當成治療目標。</p>`);
+
+// 20 Gwen
+add('E 個案概念化','Gwen 個案：對話標註',`
+<div class="kicker">E ・ 個案概念化</div><h2>Gwen：每一句對話都是一個技術</h2>
+<p class="lead">${C}p.400-402。Gwen 相信心理治療是病人與瘋子才需要的，且特別不適用非裔美國婦人。治療者先塑造信任與尊重的氛圍，並協助她了解：<b>她肯前來治療時，就已開始改變。</b></p>
+<table>
+<tr><th style="width:56%">對話（摘錄與改寫）</th><th>標註</th></tr>
+<tr><td><b>治療師：</b>請告訴我，妳所希望的美好生活是什麼模樣？</td><td>W：探詢她的獨特世界</td></tr>
+<tr><td><b>Gwen：</b>我希望被欣賞，輕鬆自在。我不希望「工作」成為生活中最重要的部分。希望被家人尊敬、關愛。我恨死了所有的事情，好像都只有我一個人在做！</td><td>需求：愛與隸屬、權力、自由</td></tr>
+<tr><td><b>治療師：</b>回想上週的生活內容，有什麼事情讓妳接近美好生活的機會？<br><b>Gwen：</b>我參加了瑜伽的初級班，那讓我很放鬆。</td><td>D：Gwen 嘗試做了一種新行為</td></tr>
+<tr><td><b>治療師：</b>好極了，我以妳為榮，妳已能全心投入了！</td><td>投入（involvement）、強化成功</td></tr>
+<tr><td><b>治療師：</b>妳確實做了很多事，那些都是妳要繼續做下去的嗎？</td><td>現實檢核</td></tr>
+<tr><td><b>Gwen：</b>我的壞習慣是過度負責任，它一直讓我精疲力竭！</td><td>E：自我評鑑</td></tr>
+<tr><td><b>治療師：</b>扮演「隨傳隨到」這樣的角色對妳有多重要？<br><b>Gwen：</b>一點也不重要，我眼睜睜看著祖母精疲力竭地照顧全家人，我不要再重蹈覆轍！</td><td>不帶任何批判的詢問</td></tr>
+<tr><td><b>治療師：</b>妳能答應我本週要做些什麼不同的努力嗎？<br><b>Gwen：</b>至少每週要去上瑜伽課。我可以替我母親安排老人送餐服務，那樣就可以省下可觀的時間。</td><td>P：計畫與承諾</td></tr>
+<tr><td><b>治療師：</b>妳考慮過要找時間閱讀一本較易唸的書嗎？</td><td>遞書：Wubbolding 和 Brickell（2001）</td></tr>
+</table>
+<p class="src">${C}治療者克制自己告訴她選什麼當計畫的衝動，因為成功與否「必須由她自己對生活中有哪些需要改變的評鑑來決定」。治療者會在下次一開始就檢核這些行動。文化提醒：非西方個案需要較有彈性的 W。</p>`);
+
+// 21 亞大110 案例題
+add('E 個案概念化','案例題：亞大110',`
+<div class="kicker">E ・ 個案概念化</div><h2>考古案例題示範作答</h2>
+<p class="lead">${X('亞大110・30 分')} 22 歲大四女學生。修課與家庭經濟壓力，遭女友提議分手，心情鬱悶、疲倦、缺曠課；3 歲時父母離異，與父同住，有哥哥但不親近；失去女友彷彿失去生命重心。(1) 現實治療對案主觀點與處遇（15%）(2) 特色與限制（15%）</p>
+${tabs('case',[
+{k:'概念化',v:`<div class="grid g2"><div class="box teal"><h3>需求缺口 ${M}</h3>${li(['<b>愛與隸屬</b>：女友是唯一重要連結，失去後優質世界出現大洞；原生家庭支持有限','<b>權力</b>：課業壓力、缺曠課，成就感下降','<b>樂趣、自由</b>：無心於課業，活動縮減'])}</div>
+<div class="box"><h3>整體行為拆解 ${M}</h3>${li(['<b>行動</b>：缺課、低頭少話、少眼神交會','<b>思考</b>：「失去女友＝失去意義」','<b>感受</b>：鬱悶','<b>生理</b>：疲倦'])}<p style="font-size:13px;color:var(--muted)">用動詞說法：「正在鬱悶、正在疲倦」。</p></div></div>`},
+{k:'處遇 WDEP',v:`${li(['<b>關係</b>：先投入、不批判。不接受「我什麼都不想做」的藉口，但不懲罰','<b>W</b>：「如果心情好一點，你希望生活是什麼樣子？」釐清她想要的：只有「女友」，還是「有人陪、有意義」？','<b>D</b>：「這兩週你每天怎麼過？」探索缺課與退縮的行動','<b>E</b>：「現在這些做法，有讓你更接近想要的生活嗎？」','<b>P</b>：SAMIC³ 小計畫，例如本週聯絡哥哥一次、回到課堂兩堂、每週與一位同學吃一次飯，並寫下來'])}<div class="quote">重點話術：「你唯一能控制的是自己，女友的決定不在這裡。」${M}</div>`},
+{k:'特色與限制',v:`<div class="grid g2"><div class="box teal"><h3>特色（可直接引用）${H}</h3>${li(['注重現時而非過去','注重個人責任與承諾','注重成功認同的培養，重視積極面','策略技術具體明確，是短期性治療'])}</div>
+<div class="box rose"><h3>限制（結合本案）</h3>${li([M+'父母離異與失落的哀悼情緒，在此取向中容易被輕輕帶過',H+'排斥移情，重心在個體意識，未考慮內心壓抑衝突與潛意識',H+'集體主義文化：華人是「組合式」個人主義，外控與關係界限不同',M+'鬱悶持續惡化或有自傷風險，需評估是否轉介醫療（Wubbolding 與 DSM 相容）'])}</div></div>`}])}`);
+
+// 22 名詞卡
+add('F 考古題複習','名詞解釋翻面卡',`
+<div class="kicker">F ・ 考古題複習</div><h2>講義內的歷屆名詞解釋</h2>
+<p class="lead">點卡片翻面。背面是可直接擴寫成 5% 的答案骨架。${H}</p>
+<div class="grid g3" id="cards"></div>
+<p class="src">另：★WDEP 理論歷年出現最多（屏大103 5%、106 6%、東吳110 6%、政大111 5%）。</p>`);
+
+// 23 申論
+add('F 考古題複習','申論題答題骨架',`
+<div class="kicker">F ・ 考古題複習</div><h2>申論題：先寫定義，再寫例子</h2>
+<p class="lead">點開看每題的答案骨架。講義題目為主，標註 ${M} 的是我補的作答建議。</p>
+${acc([
+{k:`現實治療的步驟 ${X('師大 15%')}`,v:`${li(['<b>治療目標</b>：教當事人運用 3R 滿足需求，由外在支持轉為內在支持；發展負責又合乎現實的計畫','<b>治療者功能</b>：自身負責且自我實現；不替當事人做價值判斷；具教師功能；提出設限','<b>過程原則</b>：關心溫暖了解；著重目前行為而非感覺；著重目前；價值判斷；計畫；承諾；沒有藉口；排除懲罰','<b>當事人經驗</b>：體會到重視目前行為；批判眼光看自己；擬定計畫把失敗行為變成功；以負責態度履行合約','<b>關係</b>：先建立溫暖了解的環境；給當事人「他能為自己負責」的觀念'])}`},
+{k:`3R 與「不接受藉口、不要懲罰、永不放棄」 ${X('嘉大 25%')}`,v:`${li(['<b>3R</b>：right 正當、responsibility 責任、reality 現實，並舉小明考研究所為例','<b>不接受藉口</b>：不問為什麼沒做到，問「你什麼時候要去做？怎麼做？」','<b>不要懲罰</b>：懲罰破壞關係並帶來失敗認同，讚美才使人負責','<b>永不放棄</b>：耐心給時間轉變，一再討論計畫直到進步'])}`},
+{k:`舉一案例說明 WDEP ${X('實踐106 20%')}`,v:`<p>題目要求：<b>先寫出 WDEP 各代表什麼，再舉例說明</b>。</p>${li(['W：期盼、需求與知覺（你要什麼？）','D：方向與行動（你正在做什麼？）','E：自我評鑑（這有用嗎？）','P：計畫與承諾（SAMIC³）',''])}`},
+{k:`以研一新生身份說明如何滿足五大需求 ${X('高師大107 25%（各 5%）')}`,v:`<p>${M} 每個需求寫「一句定義＋一個具體行動」：</p>${li(['<b>生存</b>：規律作息、控制開銷，穩住學業基礎','<b>愛與隸屬</b>：加入研究室讀書會，固定與兩位同學討論','<b>權力</b>：訂定可達成的學習目標，累積小成就','<b>自由</b>：自己選定研究主題、安排每週時間','<b>樂趣</b>：保留每週運動或興趣時間（積極嗜好）'])}`},
+{k:`選擇理論與優質世界的關聯 ${X('暨大107 20%')}`,v:`${li(['<b>選擇理論</b>：人的行為出自內在動機，是為了滿足五大需求而做的選擇','<b>優質世界</b>：腦中儲存最能滿足需求的人事物與圖像（相簿）','<b>關聯</b>：我們無法直接滿足需求，只能依優質世界的圖像去挑選行為；當「想要的」與「知覺到的」有落差，就產生整體行為。治療的工作是釐清相簿、評鑑行為是否讓我們更接近它'])}`},
+{k:`阿德勒與現實治療人性觀的相同與相異 ${X('中教109 20 分')}`,v:`<p>見第 12 頁比較表。${M} 骨架：相同（目的性、社會連結、責任、短期）→ 相異（早年與生活型態 vs 現在；自卑補償 vs 需求缺口）→ 小結（兩者都不是疾病模式）。</p>`},
+{k:`依 WDEP 陳述你對就讀諮商研究所的期望 ${X('屏大112 10 分')}`,v:`${li(['W：想成為能陪伴他人的諮商心理師（需求：權力、愛與隸屬、意義）','D：目前每天讀書兩小時、參加讀書會、做志工','E：這些行動是否足以讓我達到目標？還缺實務經驗','P：每週三、六晚上讀書；每月一次志工；寫下並與同學互相檢核（SAMIC³）'])}<p style="font-size:12px;color:var(--muted)">${M}答案為示範。</p>`}
+])}`);
+
+// 24 自我測驗
+add('F 考古題複習','自我測驗',`
+<div class="kicker">F ・ 考古題複習</div><h2>歷屆選擇題 14 題</h2>
+<p class="lead">答案依講義內劃線標示。高師112 一題依 E 的定義推論為 B（講義未明示，請自行核對）。</p>
+<div class="grid g2">
+  <div class="box" id="quiz"></div>
+  <div><div class="box teal"><h3>成績</h3><div class="meter"><i id="qbar"></i></div><p id="qscore">尚未作答</p><button class="btn" id="qreset">重做</button></div>
+  <div class="box warm" style="margin-top:12px"><h3>錯題整理</h3><div id="qwrong" style="font-size:14px">還沒有錯題。</div></div></div>
+</div>`);
+
+// 25 應考對策
+add('F 考古題複習','應考對策與限制',`
+<div class="kicker">F ・ 考古題複習</div><h2>貢獻、限制與易錯點</h2>
+<div class="grid g3">
+  <div class="box teal"><h3>貢獻 ${H}</h3>${li(['注重現時而非過去','注重個人責任與承諾','注重成功認同，重視積極面','策略技術具體明確，短期性治療','${C}已獲歐洲心理治療協會認可；成癮、校園、機構廣泛應用'.replace('${C}',C)])}</div>
+  <div class="box rose"><h3>限制 ${H}</h3>${li(['集體主義影響：華人是「組合式」個人主義，人我界限不明確','外控的文化：天人合一，不認為控制權只在自己手中','親密關係：可依親疏把他人視若自己（「有關係就沒關係」）','重心在個體意識，未考慮內心壓抑衝突與潛意識','排斥移情作用'])}</div>
+  <div class="box blue"><h3>限制 ${C}</h3>${li(['不重視潛意識、童年創傷、夢與移情','忽視社會不公：過度強調責任，可能傷害受壓迫者','有些當事人不願主張自己的需求，需調整','看似簡單，需完整實習與督導','Glasser 與 Wubbolding 對診斷與用藥立場有差'])}</div>
+</div>
+<div class="grid g2" style="margin-top:14px">
+  <div class="box warm"><h3>易錯點速記</h3>${li(['權<b>力</b>，不是權利','前輪＝行動與思考','E＝自我評鑑，不是「效果與效能」','W＝期盼、需求與知覺，不是「個案所處的世界」','第一步不是診斷（政大 X）','不問「為什麼沒做到」，問「什麼時候做？」','移情＝逃避責任（Glasser）','Total Behavior 沒有 Belief'])}</div>
+  <div class="box"><h3>萬用答題公式 ${M}</h3>${li(['<b>定義</b>：一句話寫出概念與提出者','<b>來源</b>：控制理論 / 選擇理論 / Glasser、Wubbolding','<b>內涵</b>：2-3 個要點，用講義用詞','<b>例子</b>：用小明考研究所、Stan 或 Gwen','<b>限制</b>：加一句文化或潛意識的局限，拿加分'])}</div>
+</div>
+<p class="src">資料來源：教育家文教機構 樊蓉老師編授，輔導原理 第十三章，頁 243-257；《諮商與心理治療》第 11 章，頁 372-406。本站為學習筆記，非原書複本。</p>`);
+
+/* ---------- 引擎 ---------- */
+const stage = document.getElementById('stage');
+stage.innerHTML = S.map((s,i)=>`<section class="slide" data-i="${i}" aria-label="${s.title}">${s.html}</section>`).join('');
+const slides = [...stage.querySelectorAll('.slide')];
+const $ = id => document.getElementById(id);
+let cur = 0, playing = false, timer = null;
+
+function go(n, dir){
+  n = Math.max(0, Math.min(S.length-1, n));
+  slides.forEach((el,i)=>{ el.classList.toggle('on', i===n); el.classList.toggle('out', i<n); if(i===n) el.scrollTop=0; });
+  cur = n;
+  $('sec').textContent = S[n].sec + '・' + S[n].title;
+  $('count').textContent = (n+1) + ' / ' + S.length;
+  $('prog').firstElementChild.style.width = ((n+1)/S.length*100) + '%';
+  document.querySelectorAll('#dlist a').forEach((a,i)=>a.classList.toggle('cur', i===n));
+  try{ history.replaceState(null,'','#'+(n+1)); }catch(e){}
+  if(playing) schedule();
+}
+function schedule(){
+  clearTimeout(timer);
+  const sec = +$('spd').value;
+  if(cur >= S.length-1){ stop(); return; }
+  timer = setTimeout(()=>go(cur+1), sec*1000);
+}
+function start(){ playing = true; $('play').textContent = '❚❚ 暫停'; $('play').classList.add('on'); if(cur>=S.length-1) go(0); else schedule(); }
+function stop(){ playing = false; clearTimeout(timer); $('play').textContent = '▶ 播放'; $('play').classList.remove('on'); }
+$('play').onclick = () => playing ? stop() : start();
+$('next').onclick = () => go(cur+1);
+$('prev').onclick = () => go(cur-1);
+$('spd').onchange = () => { if(playing) schedule(); };
+$('ov').onclick = () => $('drawer').classList.add('on');
+$('drawer').onclick = e => { if(e.target.id==='drawer') $('drawer').classList.remove('on'); };
+$('dlist').innerHTML = '<h3 style="margin:0 0 8px;color:var(--brand)">目錄</h3>' + S.map((s,i)=>`<a data-g="${i}"><b>${i+1}</b><span>${s.title}<br><small style="color:var(--muted)">${s.sec}</small></span></a>`).join('');
+$('dlist').onclick = e => { const a = e.target.closest('a'); if(a){ go(+a.dataset.g); $('drawer').classList.remove('on'); } };
+$('dk').onclick = () => {
+  const d = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = d; try{ localStorage.setItem('rt-theme', d); }catch(e){}
+};
+try{ const t = localStorage.getItem('rt-theme'); if(t) document.documentElement.dataset.theme = t; else if(matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme='dark'; }catch(e){}
+$('fs').onclick = () => {
+  if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.().catch(()=>{}); document.body.classList.add('full'); }
+  else { document.exitFullscreen?.(); }
+};
+document.addEventListener('fullscreenchange', () => { if(!document.fullscreenElement) document.body.classList.remove('full'); });
+document.addEventListener('keydown', e => {
+  if(e.target.tagName === 'SELECT') return;
+  if(e.key==='ArrowRight'||e.key==='PageDown') go(cur+1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp') go(cur-1);
+  else if(e.key==='Home') go(0); else if(e.key==='End') go(S.length-1);
+  else if(e.key==='p'||e.key==='P') $('play').click();
+  else if(e.key==='g'||e.key==='G') $('drawer').classList.toggle('on');
+  else if(e.key==='f'||e.key==='F') $('fs').click();
+  else if(e.key==='d'||e.key==='D') $('dk').click();
+  else if(e.key==='Escape') $('drawer').classList.remove('on');
+});
+
+/* ---------- 各頁互動 ---------- */
+// tabs / acc / generic
+stage.addEventListener('click', e => {
+  const tb = e.target.closest('[data-tab]');
+  if(tb){ const box = tb.closest('[data-tabs]'); box.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on', b===tb)); box.querySelectorAll('[data-panel]').forEach(p=>p.classList.toggle('on', p.dataset.panel===tb.dataset.tab)); return; }
+  const ac = e.target.closest('.acc>button');
+  if(ac){ const a = ac.parentElement; a.classList.toggle('on'); ac.lastElementChild.textContent = a.classList.contains('on') ? '－' : '＋'; return; }
+  const fl = e.target.closest('.flip'); if(fl){ fl.classList.toggle('on'); return; }
+});
+// wheels
+const WH = [
+ ['行動 Doing（前輪）','主動行為，例如走路、說話。治療者問「你正在做什麼？」。能直接改變，並會帶領感受。'],
+ ['思考 Thinking（前輪）','對事物的想法，以及自我概念。能直接改變。（Corey 提醒：這也是認知行為治療的共同形式）'],
+ ['感受 Feeling（後輪）','憤怒、快樂、痛苦、憂鬱。不能直接命令改變，會隨前輪引導而改變。用動詞說：「正在憂鬱」。'],
+ ['生理 Physiology（後輪）','流汗、心身症狀。是身體對無效行為的警訊。隨前輪改變。']
+];
+$('wheels').addEventListener('click', e => {
+  const w = e.target.closest('.sw'); if(!w) return;
+  document.querySelectorAll('#wheels .sw').forEach(x=>x.classList.toggle('sel', x===w));
+  const d = WH[+w.dataset.w];
+  $('wdesc').innerHTML = `<h3>${d[0]}</h3><p>${d[1]}</p>`;
+});
+// chain
+let chainI = 0;
+const steps = [...document.querySelectorAll('#chain .step')];
+$('chainNext').onclick = () => { chainI = Math.min(steps.length-1, chainI+1); steps.forEach((s,i)=>s.classList.toggle('on', i<=chainI)); };
+$('chainReset').onclick = () => { chainI = 0; steps.forEach((s,i)=>s.classList.toggle('on', i===0)); };
+// E quiz
+$('stage').addEventListener('click', e => {
+  const o = e.target.closest('[data-eq]'); if(!o) return;
+  document.querySelectorAll('[data-eq]').forEach(b=>b.classList.remove('ok','no'));
+  const ok = o.dataset.eq === '1';
+  o.classList.add(ok?'ok':'no');
+  $('eqfb').innerHTML = ok ? '答對。B 問的是「想到什麼」，屬於探索思考，不是評鑑行為對自己有沒有幫助。（講義未明示答案，此為依 E 定義的推論）' : '再想想：E 是自我評鑑，問的是這件事有沒有幫助、是否更接近想要的。哪一句只在探索想法？';
+});
+// SAMIC
+const sami = [...document.querySelectorAll('#sami input')];
+sami.forEach(c => c.addEventListener('change', () => {
+  const n = sami.filter(x=>x.checked).length;
+  $('samiBar').style.width = (n/7*100)+'%';
+  $('samiTxt').textContent = n===0 ? '' : n<7 ? `已符合 ${n} / 7 項。未符合的項目就是要補強的地方。` : '七項全符合，這是一個可以承諾的計畫。';
+}));
+// flip cards
+const CARDS = [
+ ['WDEP system','政大111・5%',['W 期盼與需求：問「如果現在的自己可以過理想的生活，那會是什麼樣子？」','D 方向與行動：討論完整行為四面向，如「當你隔離在家，你覺得如何？」','E 自我評鑑：「現在每天在家、遠離人群是否能有正常社交生活？」','P 計畫與行動：SAMIC³，如「你打算什麼時候開始執行？」']],
+ ['矛盾策略 paradoxical strategy','師大、屏大・5%',['要求當事人做他害怕的事，或採取相反的態度，產生幽默、荒謬的效果','促使當事人以新見解看問題，症狀淡然處之','現實治療以語言震驚法、適當譏諷面對不合現實行為，使其負責','例：「這真是個最笨的行為！我可以看見它將帶來……的後果。」']],
+ ['成功認同 success identity','師大・5%',['現實治療的基本概念','良好人際關係，視自己為能給予且接受他人之愛的人','感覺自己對他人是重要的、有權利有價值','在不損害他人下，用合乎現實（Reality）的方法滿足需求','負責行為以「成功認同」人格為核心']],
+ ['Total behavior 總合行為','彰師大・5%',['Glasser 強調人的行為是總合的，由行動 acting、思考 thinking、感覺 feeling、生理反應 physiology 四因素組成','如汽車四輪引導車子行駛','行為是有目的的','每一個總合行為都代表我們為滿足需求所做的最佳嘗試']],
+ ['William Glasser','師大・5%',['精神科醫生，創立現實治療法，強調人們應為自己行為負責','We are our choice，在不傷害他人原則下滿足需求','1980 控制理論；行為為滿足隸屬、權力、自由、玩樂、生存','1925 出生，著《認同社會》；現實治療：溫暖接納、非懲罰的情境下學做更好的選擇']],
+ ['優質世界 quality world','嘉大・5%',['來源：現實學派提出','內涵：天生有權力、生存、愛與隸屬、自由、快樂的需求；每人又有獨特的優質世界，存放個人獨特需求、憧憬與期盼，還有認可的重要他人','應用：需求無法滿足就出現問題；治療師教導在 3R 前提下滿足需求']]
+];
+$('cards').innerHTML = CARDS.map(c=>`<div class="flip"><div class="f"><div class="s fr"><b>${c[0]}</b><span class="exam" style="margin-top:8px">${c[1]}</span><small style="color:var(--muted);margin-top:8px">點擊翻面</small></div><div class="s bk"><ul>${c[2].map(x=>`<li>${x}</li>`).join('')}</ul></div></div></div>`).join('');
+// quiz
+const Q = [
+ ['是非：現實治療第一步是做全面評估以得出明確診斷。【政大】',['對','錯'],1,'第一步不是診斷。現實治療反對標籤診斷。'],
+ ['是非：現實治療者探索當事人的過去時，傾向聚焦於過去成功。【政大】',['對','錯'],0,'過去失敗只花合宜時間，聚焦成功與美好關係。'],
+ ['Glasser 認為總合行為中較重要的是：【交大】',['生理反應','行動','感覺','思考'],1,'講義劃線為行動。'],
+ ['下列哪一項敘述符合現實學派？【交大】',['幼年經驗決定成人人格','強調覺察重於改變','由控制理論轉變為選擇理論','過去行為比內在思考更受重視'],2,'現實理論 → 控制理論 → 選擇理論。'],
+ ['下列哪一句是對現實治療的正確描述？【暨大】',['在諮商中幫助個案負責、學習如何滿足自己的需求相當重要','諮商員須寬恕不負責行為，這就是 Rogers 的接納','投入對案主並非有效方法','只有在案主無法完成計畫時才使用懲罰'],0,'不接受藉口，但不懲罰；寬恕不負責行為不是現實治療。'],
+ ['下列何者對現實治療的描述是錯誤的？【清大】',['強調協助個案產生有效的行動計畫，而不重視治療關係','強調個體有選擇自由，但需為選擇負責','不強調過去經驗，維持在目前狀態','認為移情是逃避目前應負責任的方式'],0,'現實治療非常重視關係與投入。'],
+ ['何者是現實諮商的觀點或策略？【彰師大】',['評判當事人行為的對錯以建立成功認同','接納當事人未做家庭作業的藉口','培養每天可做的嗜好，如跑步和冥想','探討感到沮喪的行為原因以負起責任'],2,'積極嗜好（positive addiction）。'],
+ ['下列何者不屬於現實學派 Total Behavior 的元素？【彰師大】',['Acting','Belief','Feeling','Physiology'],1,'四元素是行動、思考、感受、生理。'],
+ ['選擇理論 WDEP 系統，下列何者錯誤？【彰師106】',['W=期盼與需求','D=方向及實行','E=效果與效能','P=計畫與行動'],2,'E 是自我評鑑，不是效果與效能。'],
+ ['下列何者並非 Glasser 所提出的需求？【中教106】',['生存','權利','自由獨立','愛與隸屬'],1,'是「權力」power，不是權利。'],
+ ['以下哪一項描述並非現實治療的特徵？【高醫107】',['強調當事人應負起責任，自己做選擇','認為移情是不切實際、逃避現實的做法','將治療聚焦於過去的探討','避免聚焦於症狀，批評 DSM 診斷系統'],2,'現實治療聚焦當下與未來計畫。'],
+ ['哪一位學者主張「移情是諮商師和當事人同時逃避對目前的狀態負責任的一種現象」？【中教109】',['Ellis','Glasser','Beck','Lazarus'],1,'Glasser。'],
+ ['WDEP 系統能幫助人們滿足基本需求，下列說明何者錯誤？【玄奘109】',['W 代表個案所處的世界','D 代表個案所做的事','E 是個案對自己的評估','P 代表計畫和行動'],0,'W 是 wants, needs, perceptions，不是「個案所處的世界」。'],
+ ['行為的抉擇猶如一輛車，前輪帶動後輪，前輪指的是【屏大113】',['感受與思考','感受與生理','行動與生理','思考與行動'],3,'前輪是行動與思考。']
+];
+let qa = {};
+function renderQuiz(){
+  $('quiz').innerHTML = Q.map((q,i)=>`<div style="margin-bottom:14px"><b>${i+1}. ${q[0]}</b>${q[1].map((o,j)=>{
+    let cls=''; if(qa[i]!==undefined){ if(j===q[2]) cls='ok'; else if(j===qa[i]) cls='no'; }
+    return `<button class="opt ${cls}" data-q="${i}" data-o="${j}">(${String.fromCharCode(65+j)}) ${o}</button>`; }).join('')}${qa[i]!==undefined?`<div class="src">${qa[i]===q[2]?'答對。':'答錯。'}${q[3]}</div>`:''}</div>`).join('');
+  const done = Object.keys(qa).length, right = Object.keys(qa).filter(i=>qa[i]===Q[i][2]).length;
+  $('qbar').style.width = (done/Q.length*100)+'%';
+  $('qscore').textContent = done ? `${right} / ${done} 題答對（共 ${Q.length} 題）` : '尚未作答';
+  const wrong = Object.keys(qa).filter(i=>qa[i]!==Q[i][2]);
+  $('qwrong').innerHTML = wrong.length ? wrong.map(i=>`<p>${+i+1}. ${Q[i][3]}</p>`).join('') : '還沒有錯題。';
+}
+$('quiz').addEventListener('click', e => {
+  const b = e.target.closest('[data-q]'); if(!b || qa[b.dataset.q]!==undefined) return;
+  qa[b.dataset.q] = +b.dataset.o; const y = $('quiz').parentElement.scrollTop; renderQuiz();
+});
+$('qreset').onclick = () => { qa = {}; renderQuiz(); };
+renderQuiz();
+
+// 心智圖
+const MM = [
+ ['理論源起',['現實理論 1970','控制理論 1980','選擇理論 1990','Glasser 1925-2013']],
+ ['人性觀',['五大需求','優質世界','知覺','行為有目的']],
+ ['整體行為',['行動（前輪）','思考（前輪）','感受（後輪）','生理（後輪）']],
+ ['核心主張',['3R','成功認同','責任不是責備','只能控制自己']],
+ ['治療歷程',['投入關係','W 想要','D 行動','E 評估','P 計畫']],
+ ['技術與應用',['矛盾法','面質','積極性技術','跟進','學校與團體']]
+];
+(function(){
+  const svg = $('mm'), cx = 480, cy = 280, NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a={}, p=svg) => { const e = document.createElementNS(NS, n); for(const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const node = (x, y, t, cls, p) => {
+    const g = el('g', {class:'nd '+cls}, p), w = Math.max(70, t.length*14+22), h = cls==='root'?46:32;
+    el('rect', {x:x-w/2, y:y-h/2, width:w, height:h, rx:h/2}, g);
+    const tx = el('text', {x, y:y+5, 'text-anchor':'middle'}, g); tx.textContent = t; return g;
+  };
+  const lines = el('g'), kids = [];
+  const n = MM.length;
+  MM.forEach((b,i)=>{
+    const a = -Math.PI/2 + i*2*Math.PI/n, bx = cx + Math.cos(a)*190, by = cy + Math.sin(a)*165;
+    el('line', {x1:cx, y1:cy, x2:bx, y2:by}, lines);
+    const kg = el('g', {class:'kid'}), spread = b[1].length;
+    b[1].forEach((c,j)=>{
+      const off = (j-(spread-1)/2)*0.34, ka = a + off, kx = cx + Math.cos(ka)*355, ky = cy + Math.sin(ka)*250;
+      el('line', {x1:bx, y1:by, x2:Math.max(90,Math.min(870,kx)), y2:Math.max(24,Math.min(536,ky))}, kg);
+      node(Math.max(90,Math.min(870,kx)), Math.max(24,Math.min(536,ky)), c, 'c', kg);
+    });
+    kids.push(kg);
+    const g = node(bx, by, b[0], 'b', svg);
+    g.addEventListener('click', () => kg.classList.toggle('on'));
+  });
+  svg.insertBefore(lines, svg.firstChild);
+  kids.forEach(k=>svg.insertBefore(k, svg.children[1]));
+  node(cx, cy, '現實治療', 'root', svg);
+  $('mmAll').onclick = () => kids.forEach(k=>k.classList.add('on'));
+  $('mmNone').onclick = () => kids.forEach(k=>k.classList.remove('on'));
+  kids[1].classList.add('on');
+})();
+
+go(Math.max(0, Math.min(S.length-1, (parseInt(location.hash.slice(1))||1)-1)));
+</script>
+</body>
+</html>
